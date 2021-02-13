@@ -10,7 +10,7 @@ class Note extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    public $timestamps = ["created_at"];
 
     protected $fillable = ['latest_version_id'];
 

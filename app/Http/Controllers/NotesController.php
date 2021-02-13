@@ -37,8 +37,8 @@ class NotesController extends ApiController
 
             $version = new Version();
             $version->version_id = 1;
-            $version->title = 'title';
-            $version->content = 'content';
+            $version->title = $request->title;
+            $version->content = $request->content;
             $version->note_id = $note->id;
             $version->save();
 
