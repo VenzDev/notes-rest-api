@@ -12,7 +12,7 @@ class NotesController extends ApiController
     public function getNotes()
     {
         try {
-            $notes = Note::all()->where('deleted', false)->toArray();
+            $notes = Note::where('deleted', false)->get();
 
             foreach ($notes as $note) {
                 $version = Version::find($note->latest_version_id);
