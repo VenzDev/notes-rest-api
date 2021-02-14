@@ -14,6 +14,7 @@ class Note extends Model
 
     protected $fillable = ['latest_version_id'];
 
+
     public function allVersions()
     {
         return $this->hasMany('App\Models\Version');

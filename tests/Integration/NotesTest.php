@@ -46,10 +46,7 @@ class NotesTest extends TestCase
 
     public function test_update_note()
     {
-        $response = $this->json('POST', '/api/create-note', [
-            'title' => 'super fajny tytul',
-            'content' => 'Mariusz Pudzianowski',
-        ]);
+        $this->createNote();
 
         $response = $this->json('PUT', '/api/update-note', [
             'id' => 2,
@@ -76,10 +73,7 @@ class NotesTest extends TestCase
 
     public function test_update_note_with_wrong_id()
     {
-        $response = $this->json('POST', '/api/create-note', [
-            'title' => 'super fajny tytul',
-            'content' => 'Mariusz Pudzianowski',
-        ]);
+        $this->createNote();
 
         $response = $this->json('PUT', '/api/update-note', [
             'id' => 20,
@@ -91,16 +85,71 @@ class NotesTest extends TestCase
         $response->assertJson(['message' => 'Something went wrong!']);
     }
 
-    public function get_notes()
+    public function test_get_notes()
     {
-        $response = $this->json('POST', '/api/create-note', [
-            'title' => 'super fajny tytul',
-            'content' => 'Mariusz Pudzianowski',
-        ]);
+        $this->createNote();
 
         $response = $this->json('GET', '/api/notes');
 
         $response->assertStatus(200);
         $response->assertJson(['status' => 'Success', 'data' => []]);
+    }
+
+    public function test_get_note()
+    {
+        $this->createNote();
+
+        $response = $this->json('GET', '/api/note/5');
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 'Success', 'data' => []]);
+    }
+
+    public function test_get_note_with_wrong_id()
+    {
+        $this->createNote();
+
+        $response = $this->json('GET', '/api/note/50');
+
+        $response->assertStatus(422);
+        $response->assertJson(['message' => 'Something went wrong!']);
+    }
+
+    public function test_delete_note()
+    {
+        $this->createNote();
+
+        $response = $this->json('DELETE', '/api/delete-note/7');
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 'Success']);
+    }
+
+    public function test_get_note_version()
+    {
+        $this->createNote();
+
+        $response = $this->json('GET', '/api/get-note-history/8');
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 'Success']);
+    }
+
+    public function test_get_note_version_with_wrong_id()
+    {
+        $this->createNote();
+
+        $response = $this->json('GET', '/api/get-note-history/80');
+
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 'Success']);
+    }
+
+    private function createNote()
+    {
+        $this->json('POST', '/api/create-note', [
+            'title' => 'super fajny tytul',
+            'content' => 'Mariusz Pudzianowski',
+        ]);
     }
 }
