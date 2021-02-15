@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/notes', 'App\Http\Controllers\NotesController@getNotes');
 Route::get('/note/{id}', 'App\Http\Controllers\NotesController@getNote');
-Route::get('/get-note-history/{id}', 'App\Http\Controllers\notesController@getNoteHistory');
+Route::get('/get-note-history/{id}', 'App\Http\Controllers\NotesController@getNoteHistory');
 Route::post('/create-note', 'App\Http\Controllers\NotesController@createNote');
 Route::put('/update-note', 'App\Http\Controllers\NotesController@updateNote');
 Route::delete('/delete-note/{id}', 'App\Http\Controllers\NotesController@deleteNote');
